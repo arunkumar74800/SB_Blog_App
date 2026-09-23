@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>posts</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/stryle.css">
+
+    <style>
+      .navbar-nav .nav-link{
+        color: rgba(255,255,255,0.75);
+        transition: color 0.2s ease-in-out;
+      }
+      .navbar-nav .nav-link:hover{
+        color: #ffffff !important;
+      }
+
+      .navbar{
+            background-color: rgba(10, 14, 28, 0.9) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+          }
+      
+      .navbar-nav .nav-link{
+        color: rgba(255,255,255,0.75);
+        transition: color 0.2s ease-in-out;
+      }
+      .navbar-nav .nav-link:hover{
+        color: #ffffff !important;
+      }
+
+         body{
+            padding-top: 60px !important;
+            background-image: url('/images/bodyimg-4.jpg');
+            background-size: cover;
+            animation: moveSpaceBackground 60s linear infinite;
+         }
+
+         @keyframes moveSpaceBackground{
+            0%{
+              background-position: 0 0;
+            }
+            100%{
+              background-position: 1000px 1000px;
+            }
+         }
+         .card, .blog-card{
+            background: rgba(15, 20, 35, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: blur(4px);
+            border-radius: 12px;
+            color: #ffffff;
+          }
+
+          .navbar{
+            background-color: rgba(10, 14, 28, 0.9) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+          }
+          .footer{
+            background-color: rgba(10, 14, 28, 0.9) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+          }
+
+          .table{
+            color: #ffffff !important;
+          }
+          .table th, .table td{
+            background-color: transparent !important;
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.2);
+          }
+          .table-hover tbody tr:hover td{
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #ffffff !important;
+          }
+    
+  
+    </style>
+
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/dashboard}">
+          <img th:src="@{/images/logo.jpg}" alt="" width="60" height="40" class="rounded-5">
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <!--  -->
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" th:href="@{/dashboard}">Posts</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" th:href="@{/addPost}">New Post</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" th:href="@{/admin/comments}">Comments</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="/">Logout</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+      <!-- <div>
+        <a href="/" class="btn btn-danger mx-4">Logout</a>
+      </div> -->
+ 
+    </nav>
+    </div>
+
+    <div class="container my-5">
+      <div class="card p-4">
+      <h2 class="text-center fw-bold">All Blogs List</h2>
+      <div class="table-responsive">
+      <table class="table table-stripted table-hover table-bordered mt-5 min-w-full divide-y divide-gray-200">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Post Title</th>
+                <th>Post Description</th>
+                <th>Created On</th>
+                <th>Updated On</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr th:each="post, iterStat : ${postLists}">
+            <td th:text="${iterStat.count}"></td>
+            <td th:text="${post.title}"></td>
+            <td th:text="${post.description}"></td>
+            <td th:text="${post.createdOn}"></td>
+            <td th:text="${post.updatedOn}"></td>
+             <td class="px-6 py-4">
+                <div class="d-flex flex-column gap-2">
+                  <a th:href="@{/editPost(id=${post.postId})}" class="btn btn-primary btn-sm">Edit</a>
+                  <a th:href="@{/deletePost(id=${post.postId})}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+    </div>
+    </div>
+    </div>
+
+    <footer class="footer text-center py-3 mt-4 border-top">
+      <div class="container">
+        <p class="mb-0 text-white">©copy: 2026 Blog App. All right reserved.</p>
+      </div>
+    </footer>
+    
+
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

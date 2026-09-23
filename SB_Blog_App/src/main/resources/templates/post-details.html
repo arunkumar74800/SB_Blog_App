@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${post.title}">Post Details</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+     crossorigin="anonymous">
+
+     <style>
+      .navbar-nav .nav-link{
+        color: rgba(255,255,255,0.75);
+        transition: color 0.2s ease-in-out;
+      }
+      .navbar-nav .nav-link:hover{
+        color: #ffffff !important;
+      }
+
+      
+       body{
+            padding-top: 85px !important;
+            background-image: url('/images/bodyimg-4.jpg');
+            background-size: cover;
+            animation: moveSpaceBackground 60s linear infinite;
+            background-color: #0b0f19 !important;
+            color: #ffffff !important;
+         }
+
+         @keyframes moveSpaceBackground{
+            0%{
+              background-position: 0 0;
+            }
+            100%{
+              background-position: 1000px 1000px;
+            }
+         }
+         .card, .post-card{
+            background: rgba(15, 20, 35, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            color: #ffffff;
+          }
+
+          .navbar{
+            background-color: rgba(10, 14, 28, 0.9) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+          }
+          .footer{
+            background-color: rgba(10, 14, 28, 0.9) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+          }
+        
+
+          .table{
+            color: #ffffff !important;
+          }
+          .table th, .table td{
+            background-color: transparent !important;
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.2);
+          }
+
+          .card, .card.p-4, .card.p-5{
+            background-color: rgba(15, 23, 42, 0.45) !important;
+            backdrop-filter: blur(4px) !important;
+            -webkit-backdrop-filter: blur(4px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.18) !important;
+            color: #ffffff;
+          }
+
+          .card, .card-body, .post-card{
+            background-color: rgba(15, 23, 42, 0.75) !important;
+            color: #ffffff;
+          }
+
+          h1,h2,h3,h4,h5,h6,p,span,a,li{
+            color: #ffffff;
+          }
+
+        
+    </style>
+
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light" data-bs-theme="dark">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top border-bottom" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand text-primary" href="/">
+                <img th:src="@{/images/logo.jpg}" alt="" width="60" height="40" class="rounded-5">
+            </a>
+            <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" th:href="@{/}">Home</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" th:href="@{/signup}">Register</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" th:href="@{/login}">Login</a>
+            </li>
+
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-11 col-lg-11">
+                <div class="card shadow-lg bg-light boeder-0">
+                    <div class="card-body p-4 p-md-5">
+                        <!-- Post Title -->
+                        <h1 class="fw-bold mb-3 text-white" th:text="${post.title}">Post Title</h1>
+                        
+                        <!-- Published Date -->
+                        <p class="text-white mb-4" th:text="'Published on: ' + ${post.createdOn}">Date</p>
+                        <hr class="border-secondary">
+                        
+                        <!-- Full Content -->
+                        <div class="mt-4 text-dark" th:utext="${post.content}">
+                            Post content goes here...
+                        </div>
+
+                        <!-- Back to Home Button -->
+                        <div class="mt-5">
+                            <a href="/" class="btn btn-outline-secondary px-4 py-2 btn-sm text-white fw-semibold">&larr; Back to Home</a>
+                        </div>
+
+                        <div class="mt-5">
+                        <!-- Comment Form -->
+                            <form th:action="@{/post/{id}/comment(id=${post.postId})}" method="post" class="needs-validation">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label text-white fw-semibold">Your Name</label>
+                                    <input type="text" class="form-control bg-body text-white border-secondary " id="name" name="name" placeholder="Enter your name" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="email" class="form-label text-white fw-semibold">Your Email</label>
+                                    <input type="email" class="form-control bg-body text-white border-secondary" id="email" name="email" placeholder="Enter your email" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="comment" class="form-label text-white fw-semibold">Your Comment</label>
+                                    <textarea class="form-control bg-body text-white border-secondary" id="comment" name="comment" rows="3" placeholder="Write your comment here..." required></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary btn-sm px-4">Post Comment</button>
+
+                                <!-- Comment Form ke niche yeh section add karein -->
+                                <div class="mt-5">
+                                    <h4 class="text-center text-white">Comments List</h4>
+                                    <hr>
+                                    
+                                    <!-- Agar koi comments nahi hain -->
+                                    <div th:if="${#lists.isEmpty(post.comments)}" class="text-muted">
+                                        No comments yet. Be the first to comment!
+                                    </div>
+
+                                    <!-- Comments ko loop karke dikhane ke liye -->
+                                    <div class="card mb-3 shadow-sm bg-white" th:each="comment : ${post.comments}">
+                                        <div class="card-body">
+                                            <h6 class="card-subtitle mb-2 text-primary" th:text="${comment.name}"></h6>
+                                            <small class="text-white" th:text="${comment.email}"></small>
+                                            <p class="card-text mb-1 text-white" th:text="${comment.comment}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-center py-4 mt-auto border-top border-secondary" data-bs-theme="dark">
+        <div class="container">
+            <p class="mb-0 text-white">&copy; 2026 Blog App. All right reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
